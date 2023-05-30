@@ -28,7 +28,7 @@
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "request": "^2.88.2",
-    "selenium-webdriver": "^4.9.2",
+    "selenium-webdriver": "^4.9.2"
     },
   "devDependencies": {
     "@types/node": "^20.2.5",
