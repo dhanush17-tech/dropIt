@@ -1,0 +1,15 @@
+{
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@cyclic/static-builder"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.js"
+      }
+    ]
+  }
+  
