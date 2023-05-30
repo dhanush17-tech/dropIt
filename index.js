@@ -8,7 +8,7 @@ const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cron = require("node-cron");
- const router = express.Router();
+const router = express.Router();
 
 const admin = require("firebase-admin");
 const {
@@ -24,7 +24,7 @@ app.listen(5000, () => console.log("Server running at http://localhost:5000"));
 // import service account file (helps to know the firebase project details)
 const serviceAccount = require("./price-tracker-4cc9b-firebase-adminsdk-8j9qc-d733aeb855.json");
 const { parse } = require("tough-cookie");
-const { data } = require("jquery"); 
+const { data } = require("jquery");
 
 // Intialize the firebase-admin project/account
 admin.initializeApp({
@@ -289,8 +289,6 @@ router.post("/getInfo", async (req, res) => {
   }
 });
 
- 
-
 //add all the items in the cart of that fcmTokenId
 
 router.post("/addCart", async (req, res) => {
@@ -506,5 +504,3 @@ cron.schedule("0 9,14,18 * * *", () => {
   sendNotification();
 });
 app.use("/", router);
-
- 

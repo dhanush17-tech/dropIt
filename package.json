@@ -1,7 +1,7 @@
 {
-  "name": "price_tracker_backend",
+  "name": "price_tracker_backend",        
   "version": "1.0.0",
-  "description": "","engines": { "node": "14.x" },
+  "description": "", 
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
