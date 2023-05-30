@@ -23,8 +23,6 @@ app.listen(5000, () => console.log("Server running at http://localhost:5000"));
 
 // import service account file (helps to know the firebase project details)
 const serviceAccount = require("./price-tracker-4cc9b-firebase-adminsdk-8j9qc-d733aeb855.json");
-const { parse } = require("tough-cookie");
-const { data } = require("jquery");
 
 // Intialize the firebase-admin project/account
 admin.initializeApp({
