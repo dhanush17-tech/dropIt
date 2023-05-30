@@ -5,8 +5,8 @@
   "main": "index.js",
   "module": ">=16",
   "scripts": {
-    "start": "node index.js && npm i",
-    "build": "node index.js && npm i"
+    "start": "npm install && node index.js",
+    "build": "npm install && node index.js"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +26,7 @@
     "jquery": "^3.7.0",
     "node-cron": "^3.0.2",
     "nodemon": "^2.0.22",
+    "nvm": "^0.0.4",
     "pretty": "^2.0.0",
     "puppeteer": "^20.3.0",
     "puppeteer-extra": "^3.3.6",
