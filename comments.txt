@@ -1,0 +1,231 @@
+
+        // const page3 = await browser.newPage();
+        // await page3.goto(`https://www.pricebefore.com${buyLink}`);
+        // console.log(`https://www.pricebefore.com${buyLink}`);
+        // const newBuyLinkElement = await page3.$(".buy-button a");
+        // await page3.waitForSelector(".zoomImg");
+
+        // const imgElement = await page3.$(".zoomImg");
+        // const img = await imgElement.getAttribute("src");
+        // const ulElement = await page3.$(".cmo-product-highlights .bd ul");
+
+        // // Extract the text content from the <ul> element
+        // const description = await page3.evaluate(
+        //   (element) => element.textContent,
+        //   ulElement
+        // );
+
+        // const newBuyLink = (await newBuyLinkElement.getAttribute("href")) || "";
+
+        // if (newBuyLink.includes("amazon.in")) {
+        //   websiteLogo =
+        //     "https://assets.gadgets360cdn.com/kostprice/assets/img/amazon_40_40.png";
+        // } else if (newBuyLink.includes("flipkart.com")) {
+        //   websiteLogo =
+        //     "https://assets.gadgets360cdn.com/kostprice/assets/img/fk_40_40.png";
+        //}
+
+
+
+
+
+
+
+
+
+
+
+  try {
+    const { title } = req.body;
+
+    //get the price,
+    //get the descriptions,
+    //get the pictures,
+    //get the reviews
+    console.log(title);
+    const browser = await chromium.launch();
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto("https://www.amazon.in/");
+    await page.waitForSelector('input[name="field-keywords"]', {
+      timeout: 5000,
+    });
+    await page.fill('input[name="field-keywords"]', title);
+    await page.press('input[name="field-keywords"]', "Enter");
+    console.log("done1");
+    await page.screenshot({ path: "ss.png" });
+    await page.waitForSelector(".s-result-item a");
+    await page.click(".s-result-item a");
+    await page.waitForNavigation();
+    console.log("done2");
+
+    await page.screenshot({ path: "ss.png" });
+
+    await page.waitForSelector("#productDescription", { timeout: 5000 });
+    console.log("done3");
+
+    await page.screenshot({ path: "ss.png" });
+
+    const description = await page.textContent("#productDescription");
+
+    const totalReview = await page.textContent(".a-size-base .a-nowrap");
+
+    const imageElements = await page.$$(".H2kMIf img");
+    const images = [];
+
+    const ratings = [];
+    const ratingElement = await page.$$(
+      "#histogramTable tbody tr .a-size-base"
+    );
+    ratingElement.map(async (element, index) => {
+      const rating = await element[index].innerText();
+      ratings.push(rating);
+    });
+
+    for (const element of imageElements) {
+      const src = await element.getAttribute("src");
+      images.push(src);
+    }
+
+    res.json({
+      description: description,
+      totalReview: totalReview,
+      img: images,
+      rating: ratings,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+
+      // const searchResponse = await axios.get(
+    //   `https://www.amazon.in/s?k=${title}`
+    // );
+
+    // const $ = cheerio.load(searchResponse.data);
+    // const link = $(".s-result-item a").attr("href");
+
+    // if (!link) {
+    //   throw new Error("No search results found");
+    // }
+
+    // const productResponse = await axios.get(`https://www.amazon.in/${link}`);
+    // const page = cheerio.load(productResponse.data);
+    // const description = page("#feature-bullets li").text();
+
+    // const ratingText = page(
+    //   '.a-size-medium.a-color-base[data-hook="rating-out-of-text"]'
+    // ).text();
+
+    // const images = [];
+    // page(".a-dynamic-image")
+    //   .slice(0, 5)
+    //   .each((_, element) => {
+    //     const src = page(element).attr("src");
+    //     images.push(src.replace("._SS40_", ""));
+    //   });
+
+
+
+    
+// const db = getFirestore();
+// const documents = await admin.firestore().collection("userItems").get();
+// documents.forEach(async (doc) => {
+//   for (let i = 0; i < doc.items.length; i++) {
+//     const browser = await browserPromise;
+//     const page = await browser.newPage();
+//     await page.goto("https://pricee.com/");
+//     await page.type('input[name="q"]', itemName);
+//     await page.keyboard.press("Enter");
+
+//     await page.waitForSelector(".pd-img img", { timeout: 5000 });
+//     const html = await page.content();
+//     const $ = cheerio.load(html);
+//     const prices = $(".pd-price");
+//     const titles = $(".pd-title a span");
+//     const imgs = $(".pd-img img");
+//     const offers = $(".pd-ref a");
+//     const buyLinks = $(".pd-title a");
+//     const websiteLogos = $(".pd-str-logo img");
+
+//     const price = $(prices[0]).text();
+//     const title = $(titles[0]).text();
+//     const img = $(imgs[0]).attr("src");
+//     const offer = $(offers[0]).text();
+//     const buyLink = $(buyLinks[0]).attr("href");
+//     const websiteLogo = $(websiteLogos[0]).attr("src");
+//     if (
+//       parseInt(
+//         price.replace(",", "").trim() <
+//           parseInt(doc.items[i].price.replace(",", "").trim())
+//       )
+//     ) {
+//       //sendNotification
+//       // Define the notification payload
+//       const notificationPayload = {
+//         notification: {
+//           title: "Price Alert",
+//           body: price,
+//         },
+//       };
+
+//       // Send the notification to the device(s)
+//       admin
+//         .messaging()
+//         .sendToDevice(doc.fcmTokenId, notificationPayload)
+//         .then((response) => {
+//           console.log("Notification sent successfully:", response);
+//         })
+//         .catch((error) => {
+//           console.error("Error sending notification:", error);
+//         });
+//     }
+//   }
+// });
+// console.log("done");
+
+
+
+  // try {
+  //   const browser = await chromium.launch({
+  //     headless: true, // Set to false if you want to see the browser window
+  //     args: [
+  //       "--no-sandbox",
+  //       "--disable-setuid-sandbox",
+  //       "--disable-infobars",
+  //       "--window-position=0,0",
+  //       "--ignore-certifcate-errors",
+  //       "--ignore-certifcate-errors-spki-list",
+  //       "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+  //     ],
+  //   });
+
+  //   const page = await browser.newPage();
+  //   await page.goto(`https://www.barcodelookup.com/${upcCode}`);
+
+  //   // Add additional logic to interact with the page or retrieve data
+  //   const content = await page.content();
+  //   const $ = cheerio.load(content);
+  //   console.log(`https://www.barcodelookup.com/${upcCode}`);
+  //   const title = $(".product-details h4").text().trim();
+  //   return title
+  //     .split(" ")
+  //     .slice(0, count ?? title.split(" ").length)
+  //     .join(" ");
+  // } catch (error) {
+  //   console.error("Error:", error);
+  //   return "";
+  // }
+
+
+      //     const browser = await puppeteer.launch();
+    //     const page = await browser.newPage(
+
+    //     );
+    //      await page.goto(`https://www.pricebefore.com/price-drops/?category=${req.body.dealType}&price-drop=week`)
+    //       ;
+    // // Wait for the first image to load
+    // await page.waitForFunction(() => {
+    //   const img = document.querySelector(".col-left img");
+    //   return img && img.complete;
+    // });    const content = await page.content();
