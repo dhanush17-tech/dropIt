@@ -58,9 +58,10 @@ app.use(progressMiddleware);
 let browserPromise;
 
 (async () => {
-  await chromium.ensureExecutable();
-  
-  browserPromise = chromium.launch();
+   
+  browserPromise = chromium.launch(
+    {executablePath:"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"}
+  );
 })();
 
 async function scrapeProductPage(html, items) {
