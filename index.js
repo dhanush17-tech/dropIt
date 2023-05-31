@@ -58,6 +58,8 @@ app.use(progressMiddleware);
 let browserPromise;
 
 (async () => {
+  await chromium.ensureExecutable();
+  
   browserPromise = chromium.launch();
 })();
 
